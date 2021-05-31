@@ -1,5 +1,6 @@
 package dev.gabrielbussolo;
 
+import dev.gabrielbussolo.domain.Cpf;
 import dev.gabrielbussolo.domain.Student;
 import dev.gabrielbussolo.exceptions.InvalidCpfException;
 import dev.gabrielbussolo.exceptions.InvalidNameException;
@@ -29,13 +30,10 @@ public class EnrollStudentTest {
     @Test
     @DisplayName("Should not enroll student without a valid cpf")
     void validStudentCpf(){
-        EnrollStudent enrollStudent = new EnrollStudent();
         Student student = new Student();
         student.setName("Ana Silva");
-        student.setCpf("832.081.519-35");
-
-        Exception exception = assertThrows(InvalidCpfException.class, () -> enrollStudent.execute(student));
-        assertEquals("Invalid student CPF", exception.getMessage());
+        Exception exception = assertThrows(InvalidCpfException.class, () -> student.setCpf(new Cpf("832.081.519-35")));
+        assertEquals("Invalid CPF", exception.getMessage());
     }
 
     @Test
@@ -44,7 +42,7 @@ public class EnrollStudentTest {
         EnrollStudent enrollStudent = new EnrollStudent();
         Student student = new Student();
         student.setName("Ana Silva");
-        student.setCpf("832.081.519-34");
+        student.setCpf(new Cpf("832.081.519-34"));
         List<Student> students = new ArrayList<>();
         students.add(student);
         students.add(student);

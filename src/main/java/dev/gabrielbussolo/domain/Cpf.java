@@ -1,16 +1,25 @@
-package dev.gabrielbussolo;
+package dev.gabrielbussolo.domain;
+
+import dev.gabrielbussolo.exceptions.InvalidCpfException;
 
 import java.util.Arrays;
-import java.util.stream.Stream;
 
-public class Utils {
+public class Cpf {
 
     private static final Integer FACTOR_DIGIT_1 = 10;
     private static final Integer FACTOR_DIGIT_2 = 11;
     private static final Integer MAX_DIGITS_1 = 9;
     private static final Integer MAX_DIGITS_2 = 10;
 
-    public static boolean validCpf(String cpf){
+    private String cpf;
+
+    public Cpf(String cpf) {
+        if (!validCpf(cpf))
+            throw new InvalidCpfException("Invalid CPF");
+        this.cpf = cpf;
+    }
+
+    public boolean validCpf(String cpf){
         cpf = extractDigits(cpf);
         if (isInvalidLength(cpf)) return false;
         if (isBlocked(cpf)) return false;
@@ -20,20 +29,20 @@ public class Utils {
         return getCheckDigit(cpf).equals(calculatedCheckDigit);
     }
 
-    private static String extractDigits(String cpf) {
+    private String extractDigits(String cpf) {
         return cpf.replaceAll("\\D", "");
     }
 
-    private static boolean isInvalidLength(String cpf) {
+    private boolean isInvalidLength(String cpf) {
         return cpf.length() != 11;
     }
 
-    private static boolean isBlocked(String cpf) {
+    private boolean isBlocked(String cpf) {
         String[] split = cpf.split("");
         return Arrays.stream(split).allMatch(digit -> digit.equals(split[0]));
     }
 
-    private static Integer calculateDigit(String cpf, Integer factor, Integer max) {
+    private Integer calculateDigit(String cpf, Integer factor, Integer max) {
         int total = 0;
         int[] ints = toDigitArray(cpf);
         int[] cutDigits = Arrays.copyOfRange(ints, 0, max);
@@ -44,14 +53,14 @@ public class Utils {
         return (total%11 < 2) ? 0 : (11 - total%11);
     }
 
-    private static int[] toDigitArray(String cpf) {
+    private int[] toDigitArray(String cpf) {
         String[] cpfArray = cpf.split("");
         return Arrays.stream(cpfArray)
                 .mapToInt(Integer::parseInt)
                 .toArray();
     }
 
-    private static String getCheckDigit(String cpf) {
+    private String getCheckDigit(String cpf) {
         return cpf.substring(9);
     }
 }

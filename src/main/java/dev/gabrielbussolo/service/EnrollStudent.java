@@ -1,6 +1,6 @@
 package dev.gabrielbussolo.service;
 
-import dev.gabrielbussolo.Utils;
+import dev.gabrielbussolo.domain.Cpf;
 import dev.gabrielbussolo.domain.Student;
 import dev.gabrielbussolo.exceptions.InvalidCpfException;
 import dev.gabrielbussolo.exceptions.InvalidNameException;
@@ -17,7 +17,6 @@ public class EnrollStudent {
     private final Set<Student> students = new HashSet<>();
     public void execute(Student student) {
         validateStudentName(student.getName());
-        validateStudentCpf(student.getCpf());
         save(student);
     }
 
@@ -33,14 +32,6 @@ public class EnrollStudent {
             execute(student);
         }
     }
-
-    private void validateStudentCpf(String cpf) {
-        boolean valid = Utils.validCpf(cpf);
-        if (!valid){
-            throw new InvalidCpfException("Invalid student CPF");
-        }
-    }
-
     private void validateStudentName(String name){
         Pattern namePattern = Pattern.compile("^([A-Za-z]+ )+([A-Za-z])+$");
         Matcher validName = namePattern.matcher(name);
@@ -48,4 +39,5 @@ public class EnrollStudent {
             throw new InvalidNameException("Invalid student name");
         }
     }
+
 }

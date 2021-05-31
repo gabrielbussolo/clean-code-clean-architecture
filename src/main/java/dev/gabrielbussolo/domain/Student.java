@@ -2,12 +2,12 @@ package dev.gabrielbussolo.domain;
 
 public class Student {
     private String name;
-    private String cpf;
+    private Cpf cpf;
 
     public Student() {
     }
 
-    public Student(String name, String cpf) {
+    public Student(String name, Cpf cpf) {
         this.name = name;
         this.cpf = cpf;
     }
@@ -20,11 +20,11 @@ public class Student {
         this.name = name;
     }
 
-    public String getCpf() {
+    public Cpf getCpf() {
         return cpf;
     }
 
-    public void setCpf(String cpf) {
+    public void setCpf(Cpf cpf) {
         this.cpf = cpf;
     }
 }
