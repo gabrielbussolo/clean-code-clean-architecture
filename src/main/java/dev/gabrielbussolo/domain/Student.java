@@ -1,22 +1,22 @@
 package dev.gabrielbussolo.domain;
 
 public class Student {
-    private String name;
+    private Name name;
     private Cpf cpf;
 
     public Student() {
     }
 
-    public Student(String name, Cpf cpf) {
+    public Student(Name name, Cpf cpf) {
         this.name = name;
         this.cpf = cpf;
     }
 
-    public String getName() {
+    public Name getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(Name name) {
         this.name = name;
     }
 

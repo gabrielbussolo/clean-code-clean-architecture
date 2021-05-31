@@ -63,4 +63,12 @@ public class Cpf {
     private String getCheckDigit(String cpf) {
         return cpf.substring(9);
     }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
 }
